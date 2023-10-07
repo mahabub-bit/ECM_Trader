@@ -64,6 +64,5 @@ namespace ECM_ExcellentWeb.Service
                 Token = token
             });
         }
-
     }
 }

@@ -47,19 +47,9 @@ namespace ECM_ExcellentWeb.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> CreatePurchaseOrder(int productid)
+        public async Task<IActionResult> CreatePurchaseOrder()
         {
             PurchaseOrderCreateVM purchaseOrderVM = new();
-            //var respons = await _authService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
-            //if (respons != null && respons.IsSuccess)
-            //{
-            //    purchaseOrderVM.UserList = JsonConvert.DeserializeObject<List<UserDTO>>
-            //        (Convert.ToString(respons.Result)).Select(i => new SelectListItem
-            //        {
-            //            Text = i.UserName,
-            //            Value = i.Id.ToString()
-            //        }); ;
-            //}
             var response = await _companyService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
@@ -79,27 +69,10 @@ namespace ECM_ExcellentWeb.Controllers
                     {
                         Text = i.PName,
                         Value = i.Id.ToString()
-                    });
-            }
-
-            var respo = await _productService.GetAsync<APIResponse>(productid, HttpContext.Session.GetString(SD.SessionToken));
-            if (respo != null && respo.IsSuccess)
-            {
-                ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(respo.Result));
-                purchaseOrderVM.ProductDetails = model;
-                return NotFound();
+                    }); ;
             }
             
-            //var resp = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
-            //if (resp != null && resp.IsSuccess)
-            //{
-            //    purchaseOrderVM.ProductList = JsonConvert.DeserializeObject<List<ProductDTO>>
-            //    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
-            //    {
-            //        Text = i.PName,
-            //        Value = i.Id.ToString()
-            //    }); ;
-            //}
+
             var res = await _supplierService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (res != null && res.IsSuccess)
             {
@@ -108,44 +81,93 @@ namespace ECM_ExcellentWeb.Controllers
                     {
                         Text = i.Supplier_Name,
                         Value = i.Id.ToString()
-                    }); ;
+                    }); 
             }
 
             return View(purchaseOrderVM);
         }
 
-
-
         public async Task<JsonResult> Get_ProductDetails(int productid)
         {
-            PurchaseOrderCreateVM purchaseOrderVM = new();
+            PurchaseOrderCreateVM products = new();
             var response = await _productService.GetAsync<APIResponse>(productid, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
-                ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
-                purchaseOrderVM.ProductDetails = model;
+                products.ProductDetails = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
             }
-            return Json(productid);
+            ProductTemp pt = new ProductTemp();
+            pt.Id = products.ProductDetails.Id;
+            pt.PCode = products.ProductDetails.PCode;
+            pt.PName = products.ProductDetails.PName;
+            pt.PDesc = products.ProductDetails.PDesc;
+            pt.CompanyId = products.ProductDetails.CompanyId;
+            pt.CategoryId = products.ProductDetails.CategoryId;
+            pt.CategoryTypeId = products.ProductDetails.CategoryTypeId;
+            pt.QtyPerUnit = products.ProductDetails.QtyPerUnit;
+            pt.SupplierId = products.ProductDetails.SupplierId;
+            pt.PackageSize = products.ProductDetails.PackageSize;
+            pt.MRPPrice = products.ProductDetails.MRPPrice;
+            pt.RetailerPrice = products.ProductDetails.RetailerPrice;
+            pt.Gst = products.ProductDetails.Gst;
+            pt.GstSlab = products.ProductDetails.GstSlab;
 
+            pt.Discontinued = products.ProductDetails.Discontinued;
+
+            pt.CostPrice = products.ProductDetails.CostPrice;
+            pt.PDate = products.ProductDetails.PDate;
+            pt.PAddColumn1 = products.ProductDetails.PAddColumn1;
+
+            var productobj = JsonConvert.SerializeObject(pt);
+            return Json(productobj);
         }
 
-
-
-        public async Task<IActionResult> Create2()
+        [HttpPost]
+        public async Task<JsonResult> SavePurchased_Products(PurchaseOrderCreateVM model, int sid, string podate, string Purchae_Invoice_No, int company_id)
         {
-            PurchaseOrderCreateVM purchaseOrderCreateVM = new();
-            var cs = await _companyService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
-            if (cs != null && cs.IsSuccess)
+            if (ModelState.IsValid)
             {
-                purchaseOrderCreateVM.CompanyList = JsonConvert.DeserializeObject<List<CompanyDTO>>
-                    (Convert.ToString(cs.Result)).Select(i => new SelectListItem
+                var response = await _purchaseOrderService.CreateAsync<APIResponse>(model.PurchaseOrder, HttpContext.Session.GetString(SD.SessionToken));
+                if (response != null && response.IsSuccess)
+                {
+
+                }
+                else
+                {
+                    if (response.ErrorMessages.Count > 0)
+                    {
+                        ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
+                    }
+                }
+            }
+
+            var resp = await _purchaseOrderService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            if (resp != null && resp.IsSuccess)
+            {
+                model.CompanyList = JsonConvert.DeserializeObject<List<CompanyDTO>>
+                    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
                     {
                         Text = i.CName,
                         Value = i.Id.ToString()
                     }); ;
+
+                model.ProductList = JsonConvert.DeserializeObject<List<ProductDTO>>
+                    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.PName,
+                        Value = i.Id.ToString()
+                    }); ;
+
+                model.SupplierList = JsonConvert.DeserializeObject<List<SupplierDTO>>
+                    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.Supplier_Name,
+                        Value = i.Id.ToString()
+                    }); ;
             }
-            return View(purchaseOrderCreateVM);
+
+            return Json(model);
         }
+
 
         //[Authorize(Roles = "admin")]
         [HttpPost]

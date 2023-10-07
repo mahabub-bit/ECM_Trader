@@ -43,7 +43,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.CategoryType", b =>
@@ -70,7 +70,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryTypes", (string)null);
+                    b.ToTable("CategoryTypes");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Company", b =>
@@ -129,13 +129,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Customer", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CustomerAccNo")
                         .HasColumnType("nvarchar(max)");
@@ -206,13 +209,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.CustomerAddress", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -248,13 +254,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomersAddress", (string)null);
+                    b.ToTable("CustomersAddress");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Order", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
@@ -322,13 +331,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("CGst")
                         .HasColumnType("decimal(18,2)");
@@ -385,13 +397,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersDetail", (string)null);
+                    b.ToTable("OrdersDetail");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderStatus", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
@@ -401,13 +416,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses", (string)null);
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -490,7 +508,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product_Rate_History", b =>
@@ -533,13 +551,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductRates", (string)null);
+                    b.ToTable("ProductRates");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrder", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddPurchaseColumn")
                         .HasColumnType("nvarchar(max)");
@@ -617,13 +638,16 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PurchaseOrders", (string)null);
+                    b.ToTable("PurchaseOrders");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrderDetail", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float>("CGst")
                         .HasColumnType("real");
@@ -694,7 +718,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("PurchaseOrdersDetail", (string)null);
+                    b.ToTable("PurchaseOrdersDetail");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Supplier", b =>
@@ -765,7 +789,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.User", b =>
@@ -790,7 +814,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Category", b =>

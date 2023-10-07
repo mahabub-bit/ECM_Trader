@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECM_ExcellentAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230801191311_AddCustomerTableToDb")]
-    partial class AddCustomerTableToDb
+    [Migration("20231127095731_UpdateTables")]
+    partial class UpdateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,7 +138,10 @@ namespace ECM_ExcellentAPI.Migrations
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Customer", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CustomerAccNo")
                         .HasColumnType("nvarchar(max)");
@@ -212,10 +215,220 @@ namespace ECM_ExcellentAPI.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.CustomerAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShipCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipCol1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipCol2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipCol3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipCountry")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipHNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipState")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipStreet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipZip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomersAddress");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CustomerAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OrderAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("OrderCloseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderDesc1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDesc2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDesc3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PaymentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShipAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ShipAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ShipDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Taxes")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CustomerAddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("CGst")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderDeatailStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderDetailDesc1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDetailDesc2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDetailDesc3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("OrderItemAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("OrderStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SGst")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxableValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrdersDetail");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatuses");
+                });
+
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -344,6 +557,173 @@ namespace ECM_ExcellentAPI.Migrations
                     b.ToTable("ProductRates");
                 });
 
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddPurchaseColumn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddPurchaseColumn2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddPurchaseColumn3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClosedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ClosedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PO_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PO_Invoice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PO_Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PO_TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PaymentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Quantity")
+                        .HasColumnType("real");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ShippingFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Taxes")
+                        .HasColumnType("real");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PurchaseOrders");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("CGst")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PodAddInfo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PodAddInfo2")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PodAddInfo3")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("PodAddInfo4")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PodAddInfo5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PodAddInfo6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PodAddInfo7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PodAddInfo8")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("PodDiscount")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PodItemAmount")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("PodMfgDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PodQty")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PodTaxableValue")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PodTotalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PodUnitPrice")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PurchaseInvoiceNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("SGst")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrdersDetail");
+                });
+
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Supplier", b =>
                 {
                     b.Property<int>("Id")
@@ -462,6 +842,91 @@ namespace ECM_ExcellentAPI.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.CustomerAddress", b =>
+                {
+                    b.HasOne("ECM_ExcellentAPI.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.Order", b =>
+                {
+                    b.HasOne("ECM_ExcellentAPI.Model.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.CustomerAddress", "CustomerAddress")
+                        .WithMany()
+                        .HasForeignKey("CustomerAddressId");
+
+                    b.HasOne("ECM_ExcellentAPI.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("CustomerAddress");
+
+                    b.Navigation("OrderStatus");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderDetail", b =>
+                {
+                    b.HasOne("ECM_ExcellentAPI.Model.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId");
+
+                    b.HasOne("ECM_ExcellentAPI.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("OrderStatus");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product", b =>
                 {
                     b.HasOne("ECM_ExcellentAPI.Model.Category", "Category")
@@ -522,6 +987,58 @@ namespace ECM_ExcellentAPI.Migrations
                     b.Navigation("CategoryType");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrder", b =>
+                {
+                    b.HasOne("ECM_ExcellentAPI.Model.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrderDetail", b =>
+                {
+                    b.HasOne("ECM_ExcellentAPI.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECM_ExcellentAPI.Model.PurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("PurchaseOrder");
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Supplier", b =>

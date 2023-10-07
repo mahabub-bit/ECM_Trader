@@ -7,7 +7,7 @@ namespace ECM_ExcellentAPI.Model
     public class PurchaseOrderDetail
     {
         [Required]
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         [ForeignKey("PurchaseId")]

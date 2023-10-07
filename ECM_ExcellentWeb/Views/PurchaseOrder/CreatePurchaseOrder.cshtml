@@ -8,155 +8,147 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <form asp-action="CreatePurchaseOrder">
     <br />
-    <div class="container border p-3">
-        <h1 class="text-primary">Purchase Order</h1>
-        <hr />
+    <div class="container">
+        <div class="master">
+            <h2>Purchase Order</h2>
+            <table class="table table-responsive">
+                <tr>
+                    <td>Company</td>
+                    <td>
+                        <select asp-for="PurchaseOrder.CompanyId" id="ddlCompany" name="ddlCompany" asp-items="@Model.CompanyList" class="form-control">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Company</span>
+                    </td>
+                    <td>Supplier</td>
+                    <td>
+                        <select asp-for="PurchaseOrder.SupplierId" id="ddlSupplier" name="ddlSupplier" asp-items="@Model.SupplierList" class="form-control">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Supplier</span>
 
-        <div class="container">
-            <div class="master">
-                <h2>Purchase Order</h2>
-                <table class="table table-responsive">
-                    <tr>
-                        <td>Company</td>
-                        <td>
-                            <select id="ddlCompany" name="ddlCompany" class="form-control">
-                                <option>Select</option>
-                            </select>
-                            <span class="error">Select Company</span>
-                        </td>
-                        <td>Supplier</td>
-                        <td>
-                            <select id="ddlSupplier" name="ddlSupplier" class="form-control">
-                                <option>Select</option>
-                            </select>
-                            <span class="error">Select Supplier</span>
+                    </td>
+                    <td>Date</td>
+                    <td colspan="3">
+                        <input type="text" id="podate" name="podate" class="form-control">
+                        <span class="error">Enter Purchase Order Date</span>
+                    </td>
+                    <td>Invoice No</td>
+                    <td colspan="3">
+                        <input type="text" id="Purchae_Invoice_No" name="Purchae_Invoice_No" class="form-control" placeholder="VS123">
+                        <span class="error">Enter Invoice No</span>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
 
-                        </td>
-                        <td>Date</td>
-                        <td colspan="3">
-                            <input type="text" id="podate" name="podate" class="form-control">
-                            <span class="error">Enter Purchase Order Date</span>
-                        </td>
-                        <td>Invoice No</td>
-                        <td colspan="3">
-                            <input type="text" id="Purchae_Invoice_No" name="Purchae_Invoice_No" class="form-control" placeholder="VS123">
-                            <span class="error">Enter Invoice No</span>
-                        </td>
-                    </tr>
-                    <tr>
-                    </tr>
+                <tr>
+                </tr>
 
-                    <tr>
-                    </tr>
+            </table>
+        </div>
+        <div class="Productdetails">
+            <h2>
+                Product Details
+            </h2>
+            <table class="table table-responsive">
 
-                </table>
-            </div>
+                <tr class="mycontainer" id="mainrow">
+                    <td>
+                        Qty/Unit:<br>
+                        <input type="text" id="QtyPerUnit" readonly="readonly" name="QtyPerUnit" class="form-control">
 
-            <div class="Productdetails">
-                <h2>
-                    Product Details
-                </h2>
-                <input hidden asp-for="ProductDetails.Id" />
-                <table class="table table-responsive">
+                    </td>
+                    <td>
+                        Package Size<br>
+                        <input id="PackageSize" type="text" name="PackageSize" readonly="readonly" class="form-control">
 
-                    <tr class="mycontainer" id="mainrow">
-                        <td>
-                            Qty/Unit:<br>
-                            <input type="text" asp-for="ProductDetails.QtyPerUnit" id="QtyPerUnit" asp-for="ProductDetails.QtyPerUnit" readonly="readonly" name="QtyPerUnit" class="form-control">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        MRP Price:<br>
+                        <input type="text" id="MRPPrice" readonly="readonly" name="MRPPrice" class="form-control">
 
-                        </td>
-                        <td>
-                            Package Size<br>
-                            <input id="PackageSize" type="text" name="PackageSize" readonly="readonly" class="form-control">
+                    </td>
 
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            MRP Price:<br>
-                            <input type="text" id="MRPPrice" readonly="readonly" name="MRPPrice" class="form-control">
+                    <td>
+                        Retail Price:<br>
+                        <input type="text" id="RetailerPrice" readonly="readonly" name="RetailerPrice" class="form-control">
 
-                        </td>
-
-                        <td>
-                            Retail Price:<br>
-                            <input type="text" id="RetailerPrice" readonly="readonly" name="RetailerPrice" class="form-control">
-
-                        </td>
-                    </tr>
-                </table>
+                    </td>
+                </tr>
+            </table>
 
 
-            </div>
-
-            <div class="details">
-                <h2>
-                    Order items
-                </h2>
-                <table class="table table-responsive">
-                    <tr>
-                        <td>Product</td>
-                        <td>Rate</td>
-                        <td>Qty</td>
-
-                        <td>Discount</td>
-                        <td>SGst</td>
-                        <td>CGst</td>
-                        <td>MfgDate</td>
-
-                    </tr>
-                    <tr class="mycontainer" id="mainrow2">
-                        <td>
-                            <select id="ddlProductId" asp-for="PurchaseOrder.ProductId" name="ddlProductId" asp-items="@Model.ProductList" asp-items="@Model.ProductDetails" class="ddlProductId form-control">
-                                <option>Select</option>
-                            </select>
-
-                            <span class="error">Select Product</span>
-                        </td>
-                        <td>
-                            <input type="text" id="Rate" name="Rate" class="Rate form-control">
-                            <span class="error">Valid rate required</span>
-                        </td>
-                        <td>
-                            <input type="text" id="qty" name="qty" class="qty form-control">
-                            <span class="error">Valid quantity required</span>
-                        </td>
-
-                        <td>
-                            <input type="text" id="discount" name="discount" value="0.00" class="discount form-control">
-                        </td>
-
-                        <td>
-                            <input type="text" id="SGst" name="SGst" value="9" class="SGst form-control">
-                        </td>
-                        <br />
-
-                        <td>
-                            <input type="text" id="CGst" name="CGst" value="9" class="CGst form-control">
-                        </td>
-
-                        <td>
-                            <input type="text" id="MfgDate" name="MfgDate" class="MfgDate form-control" placeholder="mm-dd-yyyy">
-                            <span class="error">Valid order date required (ex: MM-dd-yyyy)</span>
-                        </td>
-
-
-
-                        <td>
-                            <input type="button" id="add" value="add" style="width:80px" class="btn btn-success" />
-                        </td>
-                    </tr>
-                </table>
-                <div id="orderItems">
-                    <table class="table table-responsive" id="orderdetailsItems"></table>
-                    <span id="orderItemError" style="color:red"></span>
-                </div>
-                <div style="padding:10px 0; text-align:right">
-                    <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
-                </div>
-            </div>
         </div>
 
+
+        <div class="details">
+            <h2>
+                Order items
+            </h2>
+            <table class="table table-responsive">
+                <tr>
+                    <td>Product</td>
+                    <td>Rate</td>
+                    <td>Qty</td>
+
+                    <td>Discount</td>
+                    <td>SGst</td>
+                    <td>CGst</td>
+                    <td>MfgDate</td>
+
+                </tr>
+                <tr class="mycontainer" id="mainrow2">
+                    <td>
+                        <select id="ddlProductId" name="ddlProductId" class="ddlProductId form-control">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Product</span>
+                    </td>
+                    <td>
+                        <input type="text" id="Rate" name="Rate" class="Rate form-control">
+                        <span class="error">Valid rate required</span>
+                    </td>
+                    <td>
+                        <input type="text" id="qty" name="qty" class="qty form-control">
+                        <span class="error">Valid quantity required</span>
+                    </td>
+
+                    <td>
+                        <input type="text" id="discount" name="discount" value="0.00" class="discount form-control">
+                    </td>
+
+                    <td>
+                        <input type="text" id="SGst" name="SGst" value="9" class="SGst form-control">
+                    </td>
+                    <br />
+
+                    <td>
+                        <input type="text" id="CGst" name="CGst" value="9" class="CGst form-control">
+                    </td>
+
+                    <td>
+                        <input type="text" id="MfgDate" name="MfgDate" class="MfgDate form-control" placeholder="mm-dd-yyyy">
+                        <span class="error">Valid order date required (ex: MM-dd-yyyy)</span>
+                    </td>
+
+
+
+                    <td>
+                        <input type="button" id="add" value="add" style="width:80px" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+            <div id="orderItems">
+                <table class="table table-responsive" id="orderdetailsItems"></table>
+                <span id="orderItemError" style="color:red"></span>
+            </div>
+            <div style="padding:10px 0; text-align:right">
+                <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
+            </div>
+        </div>
     </div>
 </form>
 
@@ -166,7 +158,7 @@
 
     var Companies = []
     $(document).ready(function () {
-         alert('Create View');
+        //alert('Create View');
         var fullDate = new Date()
         //console.log(fullDate);
         //Thu May 19 2011 17:25:38 GMT+1000 {}
@@ -203,10 +195,10 @@
 
         //6. btnadd
         $("#add").click(function (e) {
-           // alert('btn add' + $('#ddlProductId').val());
+            alert('btn add' + $('#ddlProductId').val());
             //validation and add order items
             var isAllValid = true;
-            // alert('AddItems'+isAllValid)
+            alert('AddItems' + isAllValid)
             //if ($('#productCategory').val() == "0") {
             //    isAllValid = false;
             //    $('#productCategory').siblings('span.error').css('visibility', 'visible');
@@ -225,7 +217,7 @@
                 $('#ddlProductId').siblings('span.error').css('visibility', 'hidden');
             }
             if (!($('#Rate').val().trim() != '' && (parseFloat($('#Rate').val()) || 0))) {
-                
+
                 isAllValid = false;
                 $('#Rate').siblings('span.error').css('visibility', 'visible');
             }
@@ -233,24 +225,24 @@
                 $('#Rate').siblings('span.error').css('visibility', 'hidden');
             }
             if (!($('#qty').val().trim() != '' && (parseInt($('#qty').val()) || 0))) {
-                
-            isAllValid = false;
-            $('#qty').siblings('span.error').css('visibility', 'visible');
+
+                isAllValid = false;
+                $('#qty').siblings('span.error').css('visibility', 'visible');
             }
-        else {
-            $('#qty').siblings('span.error').css('visibility', 'hidden');
+            else {
+                $('#qty').siblings('span.error').css('visibility', 'hidden');
             }
-            if (($('#MfgDate').val().trim() == '' )) {
+            if (($('#MfgDate').val().trim() == '')) {
 
                 isAllValid = false;
                 $('#MfgDate').siblings('span.error').css('visibility', 'visible');
-               }
+            }
             else {
                 $('#MfgDate').siblings('span.error').css('visibility', 'hidden');
             }
-           
-           // e.preventDefault();
-           // AddItems();
+
+            // e.preventDefault();
+            // AddItems();
             if (isAllValid) {
                 alert('isAllValid true');
                 var $newRow = $('#mainrow2').clone().removeAttr('id');
@@ -285,14 +277,16 @@
             //validate order items
             var list = [];
             var isAllValid = true;
+            alert('Submit : isAllValid');
             $('#orderdetailsItems tbody tr').each(function (index, ele) {
-                //alert('select.ddlProductId' + $('select.ddlProductId', this).val());
-                //alert('.qty' + parseInt($('.qty', this).val()));
-                //alert('.Rate' + parseFloat($('.Rate',this).val() || 0));
-                //alert('.Discount' + parseInt($('.discount', this).val()));
-                //alert('select.SGst' + parseInt($('.SGst', this).val()));
-                //alert('select.CGste' + String($('.CGst', this).val()));
-                //alert('select.MfgDate' + String($('.MfgDate', this).val()));
+                alert('product');
+                alert('select.ddlProductId' + $('select.ddlProductId', this).val());
+                alert('.qty' + parseInt($('.qty', this).val()));
+                alert('.Rate' + parseFloat($('.Rate', this).val() || 0));
+                alert('.Discount' + parseInt($('.discount', this).val()));
+                alert('select.SGst' + parseInt($('.SGst', this).val()));
+                alert('select.CGste' + String($('.CGst', this).val()));
+                alert('select.MfgDate' + String($('.MfgDate', this).val()));
 
 
                 var productitem = {};
@@ -304,7 +298,7 @@
                 productitem.PodCGst = parseInt($('.CGst', this).val());
                 productitem.PodMfgDate = String($('.MfgDate', this).val());
 
-                //alert('productitem' + productitem);
+                alert('productitem' + productitem);
 
                 //var orderItem = {
                 //    ProductID: $('#ddlProductId', this).val(),
@@ -313,7 +307,7 @@
                 //}
                 list.push(productitem);
             });
-            
+
             //if (errorItemCount > 0) {
             //    $('#orderItemError').text(errorItemCount + " invalid entry in order item list.");
             //    isAllValid = false;
@@ -356,9 +350,9 @@
             else {
                 $('#Purchae_Invoice_No').siblings('span.error').css('visibility', 'hidden');
             }
-            
+
             if (isAllValid) {
-               
+
                 var data = {
                     company_id: $('#ddlCompany').val().trim(),
                     podate: $('#podate').val().trim(),
@@ -368,7 +362,7 @@
                 }
 
                 $(this).val('Please wait...');
-                
+
                 $.ajax({
                     type: 'POST',
                     url: '/PurchaseOrder/SavePurchased_Products',
@@ -377,7 +371,7 @@
                     success: function (data) {
                         console.log('data:' + data);
                         //if (data.status) {
-                            alert('Successfully saved');
+                        alert('Successfully saved');
                         //    //here we will clear the form
                         list = [];
                         $('#ddlCompany').val('Select');
@@ -393,7 +387,7 @@
                     },
                     error: function (error) {
 
-                        console.log('error'+error);
+                        console.log('error' + error);
                         $('#submit').val('Save');
                     }
                 });
@@ -405,13 +399,13 @@
 
     //fetch companies from database
     function LoadCompanies() {
-       //alert('LoadCompanies');
+        alert('LoadCompanies');
         var ddlCompany = $("#ddlCompany");
         //  ddlsids.empty().append('<option selected="selected" value="0" >Loading.....</option>');
         $.ajax({
             // async: true,
             type: "POST",
-            url: 'https://localhost:7001/api/companyAPI',
+            url: 'https://localhost:7001/api/CompanyAPI',
             contentType: 'application/json; charset=utf-8',
             dataType: "json",
             data: '{}',
@@ -519,27 +513,27 @@
 
     function GetProductDetails(productid) {
         //3. get GetProductDetails details using productid
-        // alert('GetProductDetails' + productid);
+        alert('GetProductDetails' + productid);
         $.ajax({
-            // async: true,
-            type: "POST",
+            //async: true,
+            type: "GET",
             url: '/Product/Get_ProductDetails',
             contentType: 'application/json; charset=utf-8',
             dataType: "json",
-            data: JSON.stringify({
+            data: {
                 productid: productid
-            }),
+            },
             success: function (data) {
-                // alert('suceess');
-                /*  console.log('before '+data);*/
+                alert('suceess');
+                console.log('before ' + data);
                 data = JSON.parse(data);
-                // console.log('after::'+data);
+                console.log('after::' + data);
                 //console.log('Qty' + data.QtyPerUnit);
 
-                $("#MRPPrice").val(data.MRPPrice);
-                $("#PackageSize").val(data.PackageSize);
-                $("#QtyPerUnit").val(data.QtyPerUnit);
-                $("#RetailerPrice").val(data.RetailerPrice);
+                $("#MRPPrice").val(data.Product.MRPPrice);
+                $("#PackageSize").val(data.Product.PackageSize);
+                $("#QtyPerUnit").val(data.Product.QtyPerUnit);
+                $("#RetailerPrice").val(data.Product.RetailerPrice);
             },
             error: function () {
                 // console.error(err);//
@@ -553,7 +547,7 @@
         });
     }
     function AddItems() {
-       
+
 
         if (isAllValid) {
             var $newRow = $('#mainrow2').clone().removeAttr('id');

@@ -2,6 +2,7 @@
 using ECM_ExcellentWeb.Model.Dto;
 using ECM_ExcellentWeb.Models;
 using ECM_ExcellentWeb.Models.VM;
+using ECM_ExcellentWeb.Service;
 using ECM_ExcellentWeb.Service.IService;
 using ECM_Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,33 @@ using Newtonsoft.Json;
 
 namespace ECM_ExcellentWeb.Controllers
 {
+    public class ProductTemp
+    {
+        public int Id { get; set; }
+        public string PCode { get; set; }
+        public string PName { get; set; }
+        public string PDesc { get; set; }
+        public Nullable<int> CompanyId { get; set; }
+        public Nullable<int> CategoryId { get; set; }
+        public Nullable<int> CategoryTypeId { get; set; }
+        public Nullable<int> SupplierId { get; set; }
+        public string QtyPerUnit { get; set; }
+        public string PackageSize { get; set; }
+        public Nullable<decimal> RetailerPrice { get; set; }
+        public Nullable<decimal> MRPPrice { get; set; }
+        public Nullable<decimal> Gst { get; set; }
+        public string GstSlab { get; set; }
+        public Nullable<bool> Discontinued { get; set; }
+        public Nullable<double> CostPrice { get; set; }
+        public Nullable<System.DateTime> PDate { get; set; }
+        public string PAddColumn1 { get; set; }
+        public Nullable<int> PAddColumn2 { get; set; }
+        public byte[] PImage { get; set; }
+        public string PAddColumn3 { get; set; }
+        public Nullable<int> PAddColumn4 { get; set; }
+
+    }
+
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -160,7 +188,7 @@ namespace ECM_ExcellentWeb.Controllers
                 ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
                 productVM.Product = _mapper.Map<ProductUpdateDTO>(model);
             }
-            if(response != null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
                 response = await _companyService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
                 if (response != null && response.IsSuccess)
@@ -204,7 +232,7 @@ namespace ECM_ExcellentWeb.Controllers
                             Text = i.Supplier_Name,
                             Value = i.Id.ToString()
                         });
-                    
+
                 }
                 return View(productVM);
             }
@@ -338,5 +366,23 @@ namespace ECM_ExcellentWeb.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> Get_ProductDetails(int productid)
+        {
+            ProductDeleteVM productVM = new();
+            var response = await _productService.GetAsync<APIResponse>(productid, HttpContext.Session.GetString(SD.SessionToken));
+            if (response != null && response.IsSuccess)
+            {
+                ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
+                productVM.Product = model;
+            }
+            var productobj = JsonConvert.SerializeObject(productVM);
+
+
+            return Json(productobj);
+
+        }
+
     }
 }

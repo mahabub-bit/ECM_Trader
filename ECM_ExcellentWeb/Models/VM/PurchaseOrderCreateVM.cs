@@ -16,6 +16,7 @@ namespace ECM_ExcellentWeb.Models.VM
         public ProductDTO ProductDetails { get; set; }
         [ValidateNever]
         public PurchaseOrderCreateDTO PurchaseOrder { get; set; }
+        [ValidateNever]
         public PurchaseOrderDetailCreateDTO PurchaseOrderDetail { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CompanyList { get; set; }
