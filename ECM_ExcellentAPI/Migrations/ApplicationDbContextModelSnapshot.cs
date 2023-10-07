@@ -43,7 +43,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.CategoryType", b =>
@@ -70,7 +70,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryTypes");
+                    b.ToTable("CategoryTypes", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Company", b =>
@@ -129,7 +129,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Customer", b =>
@@ -206,7 +206,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.CustomerAddress", b =>
@@ -248,7 +248,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomersAddress");
+                    b.ToTable("CustomersAddress", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Order", b =>
@@ -322,7 +322,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderDetail", b =>
@@ -385,7 +385,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersDetail");
+                    b.ToTable("OrdersDetail", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.OrderStatus", b =>
@@ -401,7 +401,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatuses", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product", b =>
@@ -490,7 +490,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Product_Rate_History", b =>
@@ -533,7 +533,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductRates");
+                    b.ToTable("ProductRates", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrder", b =>
@@ -617,7 +617,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PurchaseOrders");
+                    b.ToTable("PurchaseOrders", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.PurchaseOrderDetail", b =>
@@ -694,7 +694,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("PurchaseOrdersDetail");
+                    b.ToTable("PurchaseOrdersDetail", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Supplier", b =>
@@ -765,7 +765,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.User", b =>
@@ -790,7 +790,7 @@ namespace ECM_ExcellentAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ECM_ExcellentAPI.Model.Category", b =>

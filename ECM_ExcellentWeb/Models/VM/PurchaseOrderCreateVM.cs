@@ -10,16 +10,18 @@ namespace ECM_ExcellentWeb.Models.VM
         {
             PurchaseOrder = new PurchaseOrderCreateDTO();
             PurchaseOrderDetail = new PurchaseOrderDetailCreateDTO();
-            Product = new ProductCreateDTO();
+            ProductDetails = new ProductDTO();
         }
 
+        public ProductDTO ProductDetails { get; set; }
+        [ValidateNever]
         public PurchaseOrderCreateDTO PurchaseOrder { get; set; }
         public PurchaseOrderDetailCreateDTO PurchaseOrderDetail { get; set; }
-        public ProductCreateDTO Product { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CompanyList { get; set; }
         public IEnumerable<SelectListItem> ProductList { get; set; }
         public IEnumerable<SelectListItem> UserList { get; set; }
         public IEnumerable<SelectListItem> SupplierList { get; set; }
+        public IEnumerable<SelectListItem> PurchaseOrderDetailList { get; set; }
     }
 }

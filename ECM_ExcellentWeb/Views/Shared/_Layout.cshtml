@@ -58,9 +58,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="PurchaseOrder" asp-action="IndexPurchaseOrder">PurchaseOrder</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="PurchaseOrderDetail" asp-action="IndexPurchaseOrderDetail">PurchaseOrderDetail</a>
-                        </li>
+                        
 
                         @if (httpAcc.HttpContext.Session.GetString(SD.SessionToken) != null &&
                         httpAcc.HttpContext.Session.GetString(SD.SessionToken).ToString().Length > 0)

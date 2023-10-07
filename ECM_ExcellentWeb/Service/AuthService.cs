@@ -35,5 +35,25 @@ namespace ECM_ExcellentWeb.Service
                 Url = excellentUrl + "/api/UsersAuth/Register"
             });
         }
+
+        public Task<T> GetAllAsync<T>(string token)
+        {
+            return SendAsync<T>(new APIRequest()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = excellentUrl + "/api/UsersAuth",
+                Token = token
+            });
+        }
+
+        public Task<T> GetAsync<T>(int id, string token)
+        {
+            return SendAsync<T>(new APIRequest()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = excellentUrl + "/api/UsersAuth" + id,
+                Token = token
+            });
+        }
     }
 }

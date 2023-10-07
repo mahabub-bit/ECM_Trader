@@ -32,6 +32,12 @@ builder.Services.AddHttpClient<IPurchaseOrderService, PurchaseOrderService>();
 builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 builder.Services.AddHttpClient<IPurchaseOrderDetailService, PurchaseOrderDetailService>();
 builder.Services.AddScoped<IPurchaseOrderDetailService, PurchaseOrderDetailService>();
+builder.Services.AddHttpClient<IOrderStatusService, OrderStatusService>();
+builder.Services.AddScoped<IOrderStatusService, OrderStatusService>();
+builder.Services.AddHttpClient<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddHttpClient<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
 
 
 

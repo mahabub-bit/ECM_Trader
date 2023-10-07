@@ -7,9 +7,7 @@ namespace ECM_ExcellentWeb.Model.Dto
     {
         [Required]
         public int Id { get; set; }
-        [Required]
         public string PCode { get; set; }
-        [Required]
         public string PName { get; set; }
         public string PDesc { get; set; }
         [Required]

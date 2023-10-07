@@ -1,45 +1,39 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using ECM_ExcellentWeb.Models.Dto;
 
-namespace ECM_ExcellentAPI.Model
+namespace ECM_ExcellentWeb.Model.Dto
 {
-    public class Order
+    public class OrderDTO
     {
         [Required]
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [Required]
-        [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public CustomerDTO Customer { get; set; }
         public DateTime Date { get; set; }
         [Required]
-        [ForeignKey("OrderStatusId")]
         public int OrderStatusId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatusDTO OrderStatus { get; set; }
         [Required]
-        [ForeignKey("CompanyId")]
         public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public CompanyDTO Company { get; set; }
         public decimal OrderAmount { get; set; }
-        
-        [ForeignKey("UserId")]
+        [Required]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public UserDTO User { get; set; }
         public DateTime ShipDate { get; set; }
         public decimal ShipAmount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentMode { get; set; }
         public decimal Taxes { get; set; }
         [Required]
-        [ForeignKey("ShipAddressId")]
-        public int ShipAddressId { get; set;}
-        public CustomerAddress CustomerAddress { get; set; }
+        public int ShipAddressId { get; set; }
+        public CustomerAddressDTO CustomerAddress { get; set; }
         public DateTime OrderCloseDate { get; set; }
         public string OrderDesc1 { get; set; }
-        public string OrderDesc2 { get; set;}
-        public string OrderDesc3 { get; set;}
+        public string OrderDesc2 { get; set; }
+        public string OrderDesc3 { get; set; }
         public decimal PaymentAmount { get; set; }
-
     }
 }

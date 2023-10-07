@@ -37,6 +37,15 @@ namespace ECM_ExcellentWeb
 
             CreateMap<PurchaseOrderDetailDTO, PurchaseOrderDetailCreateDTO>().ReverseMap();
             CreateMap<PurchaseOrderDetailDTO, PurchaseOrderDetailUpdateDTO>().ReverseMap();
+
+            CreateMap<OrderStatusDTO, OrderStatusCreateDTO>().ReverseMap();
+            CreateMap<OrderStatusDTO, OrderStatusUpdateDTO>().ReverseMap();
+
+            CreateMap<OrderDTO, OrderCreateDTO>().ReverseMap();
+            CreateMap<OrderDTO, OrderUpdateDTO>().ReverseMap();
+
+            CreateMap<OrderDetailDTO, OrderDetailCreateDTO>().ReverseMap();
+            CreateMap<OrderDetailDTO, OrderDetailUpdateDTO>().ReverseMap();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ECM_ExcellentAPI.Model
     public class PurchaseOrder
     {
         [Required]
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime PO_Date { get; set; }
         [Required]
@@ -18,7 +18,7 @@ namespace ECM_ExcellentAPI.Model
         [ForeignKey("CompanyId")]
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-        [Required]
+        
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public User User { get; set; }

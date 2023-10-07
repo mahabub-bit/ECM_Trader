@@ -12,7 +12,7 @@ namespace ECM_ExcellentAPI.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<CategoryType> CategoryTypes { get; set; }
-        public DbSet<Product> Products { get; set; }
+
         public DbSet<Product_Rate_History> ProductRates { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerAddress> CustomersAddress { get; set; }
@@ -21,5 +21,6 @@ namespace ECM_ExcellentAPI.Data
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrdersDetail { get; set;}
+        public DbSet<Product> Products { get; set; }
     }
 }

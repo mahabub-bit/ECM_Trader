@@ -6,7 +6,7 @@ namespace ECM_ExcellentAPI.Model
 {
     public class Product
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int Id { get; set; }
         [Required]

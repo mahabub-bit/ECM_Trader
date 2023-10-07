@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ECM_ExcellentAPI.Data;
 using ECM_ExcellentWeb.Model.Dto;
 using ECM_ExcellentWeb.Models;
 using ECM_ExcellentWeb.Models.Dto;
@@ -9,24 +10,29 @@ using ECM_Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace ECM_ExcellentWeb.Controllers
 {
     public class PurchaseOrderController : Controller
     {
         private readonly IPurchaseOrderService _purchaseOrderService;
+        private readonly IPurchaseOrderDetailService _purchaseOrderDetailService;
         private readonly IProductService _productService;
         private readonly ISupplierService _supplierService;
         private readonly ICompanyService _companyService;
+        private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public PurchaseOrderController(IPurchaseOrderService dbPurchaseOrder, IProductService dbProduct, ICompanyService dbCompany, ISupplierService dbSupplier, IMapper mapper)
+        public PurchaseOrderController(IPurchaseOrderService dbPurchaseOrder, IPurchaseOrderDetailService dbPurchaseOrderDetailService, IProductService dbProduct, ICompanyService dbCompany, ISupplierService dbSupplier, IAuthService dbAuth, IMapper mapper)
         {
             _purchaseOrderService = dbPurchaseOrder;
+            _purchaseOrderDetailService = dbPurchaseOrderDetailService;
             _productService = dbProduct;
             _supplierService = dbSupplier;
             _mapper = mapper;
             _companyService = dbCompany;
+            _authService = dbAuth;
         }
         public async Task<IActionResult> IndexPurchaseOrder()
         {
@@ -39,10 +45,21 @@ namespace ECM_ExcellentWeb.Controllers
 
             return View(list);
         }
+
         //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> CreatePurchaseOrder()
+        public async Task<IActionResult> CreatePurchaseOrder(int productid)
         {
             PurchaseOrderCreateVM purchaseOrderVM = new();
+            //var respons = await _authService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            //if (respons != null && respons.IsSuccess)
+            //{
+            //    purchaseOrderVM.UserList = JsonConvert.DeserializeObject<List<UserDTO>>
+            //        (Convert.ToString(respons.Result)).Select(i => new SelectListItem
+            //        {
+            //            Text = i.UserName,
+            //            Value = i.Id.ToString()
+            //        }); ;
+            //}
             var response = await _companyService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
@@ -51,7 +68,7 @@ namespace ECM_ExcellentWeb.Controllers
                     {
                         Text = i.CName,
                         Value = i.Id.ToString()
-                    }); ;
+                    });
             }
 
             var resp = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
@@ -62,9 +79,27 @@ namespace ECM_ExcellentWeb.Controllers
                     {
                         Text = i.PName,
                         Value = i.Id.ToString()
-                    }); ;
+                    });
             }
 
+            var respo = await _productService.GetAsync<APIResponse>(productid, HttpContext.Session.GetString(SD.SessionToken));
+            if (respo != null && respo.IsSuccess)
+            {
+                ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(respo.Result));
+                purchaseOrderVM.ProductDetails = model;
+                return NotFound();
+            }
+            
+            //var resp = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            //if (resp != null && resp.IsSuccess)
+            //{
+            //    purchaseOrderVM.ProductList = JsonConvert.DeserializeObject<List<ProductDTO>>
+            //    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
+            //    {
+            //        Text = i.PName,
+            //        Value = i.Id.ToString()
+            //    }); ;
+            //}
             var res = await _supplierService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (res != null && res.IsSuccess)
             {
@@ -79,6 +114,38 @@ namespace ECM_ExcellentWeb.Controllers
             return View(purchaseOrderVM);
         }
 
+
+
+        public async Task<JsonResult> Get_ProductDetails(int productid)
+        {
+            PurchaseOrderCreateVM purchaseOrderVM = new();
+            var response = await _productService.GetAsync<APIResponse>(productid, HttpContext.Session.GetString(SD.SessionToken));
+            if (response != null && response.IsSuccess)
+            {
+                ProductDTO model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
+                purchaseOrderVM.ProductDetails = model;
+            }
+            return Json(productid);
+
+        }
+
+
+
+        public async Task<IActionResult> Create2()
+        {
+            PurchaseOrderCreateVM purchaseOrderCreateVM = new();
+            var cs = await _companyService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            if (cs != null && cs.IsSuccess)
+            {
+                purchaseOrderCreateVM.CompanyList = JsonConvert.DeserializeObject<List<CompanyDTO>>
+                    (Convert.ToString(cs.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.CName,
+                        Value = i.Id.ToString()
+                    }); ;
+            }
+            return View(purchaseOrderCreateVM);
+        }
 
         //[Authorize(Roles = "admin")]
         [HttpPost]
@@ -101,6 +168,7 @@ namespace ECM_ExcellentWeb.Controllers
                 }
             }
 
+
             var resp = await _purchaseOrderService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (resp != null && resp.IsSuccess)
             {
@@ -108,6 +176,13 @@ namespace ECM_ExcellentWeb.Controllers
                     (Convert.ToString(resp.Result)).Select(i => new SelectListItem
                     {
                         Text = i.CName,
+                        Value = i.Id.ToString()
+                    }); ;
+
+                model.UserList = JsonConvert.DeserializeObject<List<UserDTO>>
+                    (Convert.ToString(resp.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.UserName,
                         Value = i.Id.ToString()
                     }); ;
 
@@ -293,4 +368,9 @@ namespace ECM_ExcellentWeb.Controllers
             return View(model);
         }
     }
+
+
+
 }
+
+

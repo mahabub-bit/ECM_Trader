@@ -12,7 +12,6 @@ namespace ECM_ExcellentAPI.Model.Dto
         public int SupplierId { get; set; }
         [Required]
         public int CompanyId { get; set; }
-        [Required]
         public int UserId { get; set; }
         public decimal Rate { get; set; }
         public float Quantity { get; set; }

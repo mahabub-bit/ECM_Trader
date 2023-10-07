@@ -5,31 +5,34 @@ using ECM_Utility;
 
 namespace ECM_ExcellentWeb.Service
 {
-    public class PurchaseOrderService : BaseService, IPurchaseOrderService
+    public class OrderStatusService : BaseService, IOrderStatusService
     {
         private readonly IHttpClientFactory _clientFactory;
         private string excellentUrl;
-        public PurchaseOrderService(IHttpClientFactory clientFactory, IConfiguration configuration) : base(clientFactory)
+
+        public OrderStatusService(IHttpClientFactory clientFactory, IConfiguration configuration) : base(clientFactory)
         {
             _clientFactory = httpClient;
             excellentUrl = configuration.GetValue<string>("ServiceUrls:ExcellentAPI");
         }
-        public Task<T> CreateAsync<T>(PurchaseOrderCreateDTO dto, string token)
+
+        public Task<T> CreateAsync<T>(OrderStatusCreateDTO dto, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                Url = excellentUrl + "/api/purchaseOrderAPI",
+                Url = excellentUrl + "/api/orderStatusAPI",
                 Token = token
             });
         }
+
         public Task<T> DeleteAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = excellentUrl + "/api/purchaseOrderAPI/" + id,
+                Url = excellentUrl + "/api/orderStatusAPI/" + id,
                 Token = token
             });
         }
@@ -39,29 +42,28 @@ namespace ECM_ExcellentWeb.Service
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = excellentUrl + "/api/purchaseOrderAPI",
+                Url = excellentUrl + "/api/orderStatusAPI",
                 Token = token
             });
         }
-
 
         public Task<T> GetAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = excellentUrl + "/api/purchaseOrderAPI/" + id,
+                Url = excellentUrl + "/api/orderStatusAPI/" + id,
                 Token = token
             });
         }
 
-        public Task<T> UpdateAsync<T>(PurchaseOrderUpdateDTO dto, string token)
+        public Task<T> UpdateAsync<T>(OrderStatusUpdateDTO dto, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
-                Url = excellentUrl + "/api/purchaseOrderAPI/" + dto.Id,
+                Url = excellentUrl + "/api/orderStatusAPI/" + dto.Id,
                 Token = token
             });
         }
